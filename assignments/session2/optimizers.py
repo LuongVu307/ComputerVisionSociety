@@ -1,12 +1,15 @@
-import sys
+
 import os
+import sys
 
-
+print(os.getcwd())
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-while project_root.split("\\")[-1] != "ComputerVisionSoc":
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+while project_root.split("\\")[-1].lower() not in ["computervisionsoc", "computervisionsociety"]:
+    print(project_root)
+    project_root = os.path.abspath(os.path.join(project_root, '..'))  # Update relative to the current project_root
 
 sys.path.append(project_root)
+
 
 from CV101.optimizers import SGD
 
@@ -27,6 +30,8 @@ class CustomSGD(SGD):
         Only modify code in the box below
         """
 
+        #TODO
+        pass
 
 
 

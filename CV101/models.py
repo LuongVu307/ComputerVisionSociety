@@ -11,6 +11,7 @@ class Sequential:
         self.optimizer = None
         self.metrics = None
         self.regularizers = 0
+        self.hist = {}
 
 
     def add(self, layer):
@@ -76,14 +77,28 @@ class Sequential:
 
 
             for training_metric in training_metrics:
-                print(f"{training_metric.capitalize()}: {training_metrics[training_metric]}", end=" - ")
+                print(f"train_{training_metric.lower()}: {training_metrics[training_metric]}", end=" - ")
+
+                if training_metric.lower() not in self.hist:
+                    self.hist[training_metric.lower()] = {}
+                if "train" not in self.hist[training_metric.lower()]:
+                    self.hist[training_metric.lower()]["train"] = []
+                self.hist[training_metric.lower()]["train"].append(training_metrics[training_metric])
+                
                 
             if validation_data:
                 X_val, y_val = validation_data[0], validation_data[1]
 
                 validation_metrics = self.evaluate(X_val, y_val)
                 for validation_metric in validation_metrics:
-                    print(f"{validation_metric.capitalize()}: {validation_metrics[validation_metric]}", end=" - ")
+                    print(f"val_{validation_metric.lower()}: {validation_metrics[validation_metric]}", end=" - ")
+
+                    if validation_metric.lower() not in self.hist:
+                        self.hist[validation_metric.lower()] = {}
+                    if "val" not in self.hist[validation_metric.lower()]:
+                        self.hist[validation_metric.lower()]["val"] = []
+                    self.hist[validation_metric.lower()]["val"].append(validation_metrics[validation_metric])
+
 
             print()
 
@@ -91,7 +106,10 @@ class Sequential:
 
         for count in range(len(self.layers)):
             self.layers[count].predicting = True
-                
+
+
+    def get_hist(self):
+        return self.hist                
     
     def evaluate(self, X, y):
         y_pred = self.predict(X)
@@ -131,6 +149,7 @@ class Sequential:
             
 
         return data
+            
 
     def save_model(self, name):
         if not os.path.exists("models"):

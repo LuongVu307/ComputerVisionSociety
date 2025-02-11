@@ -6,7 +6,7 @@ import numpy as np
 
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-while project_root.split("\\")[-1] != "ComputerVisionSoc":
+while project_root.split("\\")[-1] not in ["ComputerVisionSoc", "ComputerVisionSociety"]:
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 sys.path.append(project_root)
@@ -41,8 +41,8 @@ class CustomDense(Dense):
         # Start of code
         # ========================================================
         
-        w_size = None
-        b_size = None
+        w_size = (input_size[1], self.units)
+        b_size = (1, self.units)
 
         # ========================================================
         # End of Code
@@ -84,8 +84,8 @@ class CustomDense(Dense):
 
         # Start of code
         # ========================================================
-        self.z = None
-        self.a = None
+        self.z = self.X.dot(self.W) + self.b
+        self.a = self.activation.forward(self.z)
         # ========================================================
         # End of Code
 
@@ -116,10 +116,11 @@ class CustomDense(Dense):
 
         # Start of code
         # ========================================================
+        dz = dout * self.activation.backward(self.z)
 
-        dX = None
-        self.dW = None
-        self.db = None
+        dX = dz.dot(self.W.T)
+        self.dW = self.X.T.dot(dz)
+        self.db = np.sum(dz, axis=0)
 
         # ========================================================
         # End of Code

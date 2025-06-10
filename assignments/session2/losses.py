@@ -8,12 +8,12 @@ class MeanSquaredError:
         self.loss = None
 
     def forward(self, y_pred, y_true):
-        #TODO
-        pass 
+        self.y_pred = y_pred
+        self.y_true = y_true
+        return (y_true - y_pred)**2/len(y_pred)
 
     def backward(self):
-        #TODO
-        pass
+        return 2 * np.abs(self.y_pred - self.y_true) / len(self.y_pred)
 
 
 class CategoricalCrossEntropy:
@@ -29,8 +29,8 @@ class CategoricalCrossEntropy:
     def forward(self, logits, y_true):
         y_pred = self.softmax(logits)
 
-        #TODO
-        pass
+        return - (y_true * np.log(y_pred))
+
 
     def backward(self):
 
@@ -47,8 +47,7 @@ class BinaryCrossEntropy:
     def forward(self, y_pred, y_true):
         y_pred = np.clip(y_pred, 1e-15, 1 - 1e-15)
         
-        #TODO
-        pass
+        return - (y_true * np.log(y_pred) + (1-y_true)*np.log(1-y_pred))
 
     def backward(self):
         n = len(self.y_true)

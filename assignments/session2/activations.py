@@ -5,24 +5,23 @@ class Linear:
         pass
 
     def forward(self, x):
-        #TODO
-        pass
+        return x
     
     def backward(self, dout):
-        #TODO
-        pass
+        return 1
+    
 
 class ReLU:
     def __init__(self):
         self.input = None
 
     def forward(self, x):
-        #TODO
-        pass
+        return np.max(x, 0)
 
     def backward(self, dout):
-        #TODO
-        pass
+
+        return (dout > 0).astype(int)
+        
 
 
 class Sigmoid:
@@ -30,21 +29,17 @@ class Sigmoid:
         self.output = None
 
     def forward(self, x):
-        #TODO
-        pass
+        return 1/(1+np.exp(-x))
 
     def backward(self, dout):
-        #TODO
-        pass
+        return self.forward(dout) * (1-self.forward(dout))
 
 class Tanh:
     def __init__(self):
         self.output = None
 
     def forward(self, x):
-        #TODO
-        pass
+        return np.tanh(x)
 
     def backward(self, grad_output):
-        #TODO
-        pass
+        return 1 - np.tanh(grad_output)**2

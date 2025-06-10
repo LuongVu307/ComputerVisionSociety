@@ -29,9 +29,13 @@ class CustomMomentum(Momentum):
             
         Only modify code in the box below
         """
+        if self.velocity is None:
+            self.velocity = [np.zeros_like(param) for param in params]
 
-        #TODO
-        pass
+        for i in range(len(params)):
+            self.velocity[i] = self.momentum * self.velocity[i] + grads[i]
+
+            params[i] = params[i] - self.learning_rate * self.velocity[i]
 
 
 #Extension (Not required)

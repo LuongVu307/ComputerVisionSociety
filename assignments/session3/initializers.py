@@ -26,11 +26,12 @@ class CustomHeInitializer(HeInitializer):
             
         Only modify code in the box below
         """
+        fin = shape[0]
 
         if self.mode.lower() == 'uniform':
-            ...
+            return np.random.uniform(-np.sqrt(6/fin), np.sqrt(6/fin), shape)
         elif self.mode.lower() == 'normal':
-            ...
+            return np.random.normal(0, np.sqrt(2/fin), shape)
 
 
 
@@ -49,8 +50,9 @@ class CustomXavierInitializer(XavierInitializer):
             
         Only modify code in the box below
         """
+        fin, fout = shape[0], shape[1]
 
         if self.mode.lower() == 'uniform':
-            ...
+            return np.random.uniform(-np.sqrt(6/(fin+fout)), np.sqrt(6/(fin+fout)), shape)
         elif self.mode.lower() == 'normal':
-            ...
+            return np.random.normal(0, np.sqrt(2/(fin+fout)), shape)

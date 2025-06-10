@@ -26,12 +26,12 @@ class Customregularizers(regularizers):
             - Return the regularization loss for the given params
         """
 
-        if self.type == "l2":
-            ...
+        if self.type == "l1":
+            return np.sum(np.abs(params))
             
-        elif self.type == "l1":
+        elif self.type == "l2":
+            return np.sum(params**2)
             
-            ...
         else:
             raise Exception("Invalid regularizer")
         

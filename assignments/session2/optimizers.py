@@ -22,7 +22,7 @@ class CustomSGD(SGD):
         Attributes/Methods given: 
             - self.learning_rate: The learning rate
             - params: list of the parameters (list of array)
-            - grads: list of the gradietns (list of array (same shape with params))
+            - grads: list of the gradients (list of array (same shape with params))
         
         Task: 
             - Return the new updated params (list of array (shame shape with params))
@@ -30,8 +30,10 @@ class CustomSGD(SGD):
         Only modify code in the box below
         """
 
-        #TODO
-        pass
+        for i in range(len(params)):
+            params[i] = params[i] - self.learning_rate * grads[i]
 
+
+        return params
 
 
